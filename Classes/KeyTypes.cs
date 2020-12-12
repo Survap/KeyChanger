@@ -2,11 +2,11 @@
 {
 	public enum KeyTypes
 	{
-		Temple = Terraria.ID.ItemID.TempleKey,
-		Jungle = Terraria.ID.ItemID.JungleKey,
-		Corruption = Terraria.ID.ItemID.CorruptionKey,
-		Crimson = Terraria.ID.ItemID.CrimsonKey,
-		Hallowed = Terraria.ID.ItemID.HallowedKey,
-		Frozen = Terraria.ID.ItemID.FrozenKey
+		Templo = Terraria.ID.ItemID.TempleKey,
+		Jungla = Terraria.ID.ItemID.JungleKey,
+		Corrupto = Terraria.ID.ItemID.CorruptionKey,
+		Carmesi = Terraria.ID.ItemID.CrimsonKey,
+		Sagrado = Terraria.ID.ItemID.HallowedKey,
+		Helado = Terraria.ID.ItemID.FrozenKey
 	}
 }
