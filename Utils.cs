@@ -17,33 +17,33 @@ namespace KeyChanger
 			Key key;
 			switch (type)
 			{
-				case KeyTypes.Temple:
-					key = new Key("temple", KeyTypes.Temple, KeyChanger.Config.EnableTempleKey);
+				case KeyTypes.Templo:
+					key = new Key("templo", KeyTypes.Templo, KeyChanger.Config.EnableTempleKey);
 					key.Items = GetItems(KeyChanger.Config.TempleKeyItem);
 					key.Region = TShock.Regions.GetRegionByName(KeyChanger.Config.TempleRegion);
 					break;
-				case KeyTypes.Jungle:
-					key = new Key("jungle", KeyTypes.Jungle, KeyChanger.Config.EnableJungleKey);
+				case KeyTypes.Jungla:
+					key = new Key("jungla", KeyTypes.Jungla, KeyChanger.Config.EnableJungleKey);
 					key.Items = GetItems(KeyChanger.Config.JungleKeyItem);
 					key.Region = TShock.Regions.GetRegionByName(KeyChanger.Config.JungleRegion);
 					break;
-				case KeyTypes.Corruption:
-					key = new Key("corruption", KeyTypes.Corruption, KeyChanger.Config.EnableCorruptionKey);
+				case KeyTypes.Corrupto:
+					key = new Key("corrupto", KeyTypes.Corrupto, KeyChanger.Config.EnableCorruptionKey);
 					key.Items = GetItems(KeyChanger.Config.CorruptionKeyItem);
 					key.Region = TShock.Regions.GetRegionByName(KeyChanger.Config.CorruptionRegion);
 					break;
-				case KeyTypes.Crimson:
-					key = new Key("crimson", KeyTypes.Crimson, KeyChanger.Config.EnableCrimsonKey);
+				case KeyTypes.Carmesi:
+					key = new Key("carmesi", KeyTypes.Carmesi, KeyChanger.Config.EnableCrimsonKey);
 					key.Items = GetItems(KeyChanger.Config.CrimsonKeyItem);
 					key.Region = TShock.Regions.GetRegionByName(KeyChanger.Config.CrimsonRegion);
 					break;
-				case KeyTypes.Hallowed:
-					key = new Key("hallowed", KeyTypes.Hallowed, KeyChanger.Config.EnableHallowedKey);
+				case KeyTypes.Sagrado:
+					key = new Key("sagrado", KeyTypes.Sagrado, KeyChanger.Config.EnableHallowedKey);
 					key.Items = GetItems(KeyChanger.Config.HallowedKeyItem);
 					key.Region = TShock.Regions.GetRegionByName(KeyChanger.Config.HallowedRegion);
 					break;
-				case KeyTypes.Frozen:
-					key = new Key("frozen", KeyTypes.Frozen, KeyChanger.Config.EnableFrozenKey);
+				case KeyTypes.Helado:
+					key = new Key("helado", KeyTypes.Helado, KeyChanger.Config.EnableFrozenKey);
 					key.Items = GetItems(KeyChanger.Config.FrozenKeyItem);
 					key.Region = TShock.Regions.GetRegionByName(KeyChanger.Config.FrozenRegion);
 					break;
@@ -78,14 +78,14 @@ namespace KeyChanger
 			string error;
 			var list = new List<string>()
 			{
-				ply.HasPermission("key.change") ? "change" : null,
-				ply.HasPermission("key.reload") ? "reload" : null,
-				ply.HasPermission("key.mode") ? "mode" : null,
-				"list"
+				ply.HasPermission("botin.abrir") ? "abrir" : null,
+				ply.HasPermission("botin.reload") ? "reload" : null,
+				ply.HasPermission("botin.modo") ? "modo" : null,
+				"lista"
 			};
 
 			string valid = String.Join("/", list.FindAll(i => i != null));
-			error = String.Format("Invalid syntax! Proper syntax: {0}key <{1}> [type]", Commands.Specifier, valid);
+			error = String.Format("Error de uso. Modo de uso: {0}botin <{1}> [tipo]", Commands.Specifier, valid);
 			return error;
 		}
 	}

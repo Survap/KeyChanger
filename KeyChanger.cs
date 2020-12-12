@@ -14,15 +14,15 @@ namespace KeyChanger
 	[ApiVersion(2, 1)]
 	public class KeyChanger : TerrariaPlugin
 	{
-		public override string Author => "Enerdy";
+		public override string Author => "Enerdy - Modified by Tsviets";
 
 		public static Config Config { get; private set; }
 
-		public override string Description => "SBPlanet KeyChanger System: Exchanges special chest keys by their correspondent items.";
+		public override string Description => "Lootboxes System: Exchanges keys to award with random customizable prizes and rates.";
 
 		public KeyTypes?[] Exchanging { get; private set; }
 
-		public override string Name => "KeyChanger";
+		public override string Name => "Lootboxes";
 
 		public override Version Version => System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
 
@@ -75,7 +75,7 @@ namespace KeyChanger
 						// Check if the player has available slots and warn them if they do not
 						if (!TShock.Players[e.Msg.whoAmI].InventorySlotAvailable)
 						{
-							TShock.Players[e.Msg.whoAmI].SendWarningMessage("Make sure you have at least one available inventory slot to perform this exchange.");
+							TShock.Players[e.Msg.whoAmI].SendWarningMessage("Asegurate de tener espacio disponible en tu inventario antes abrir tu botin.");
 							return;
 						}
 
@@ -99,20 +99,20 @@ namespace KeyChanger
 						TShock.Players[e.Msg.whoAmI].SendData(PacketTypes.ItemDrop, "", id);
 						// If the item is stackable, give them the same amount of in return; otherwise, return the excess
 						Random rand = new Random();
-						Item give = key.Items[rand.Next(0, key.Items.Count)];
+						Item give = key.Items[rand.Next(0,key.Items.Count)];
 						if (give.maxStack >= stack)
 						{
-							TShock.Players[e.Msg.whoAmI].GiveItem(give.netID, give.Name, give.width, give.height, stack);
+							TShock.Players[e.Msg.whoAmI].GiveItem(give.netID, stack);
 							Item take = TShock.Utils.GetItemById((int)key.Type);
-							TShock.Players[e.Msg.whoAmI].SendSuccessMessage($"Exchanged {stack} {take.Name}(s) for {stack} {give.Name}(s)!");
+							TShock.Players[e.Msg.whoAmI].SendSuccessMessage($"Has usado {stack} {take.Name} y has obtenido {stack} {give.Name}!");
 						}
 						else
 						{
-							TShock.Players[e.Msg.whoAmI].GiveItem(give.netID, give.Name, give.width, give.height, 1);
+							TShock.Players[e.Msg.whoAmI].GiveItem(give.netID, 1);
 							Item take = TShock.Utils.GetItemById((int)key.Type);
-							TShock.Players[e.Msg.whoAmI].SendSuccessMessage($"Exchanged a {take.Name} for 1 {give.Name}!");
-							TShock.Players[e.Msg.whoAmI].GiveItem(take.netID, take.Name, take.width, take.height, stack - 1);
-							TShock.Players[e.Msg.whoAmI].SendSuccessMessage("Returned the excess keys.");
+							TShock.Players[e.Msg.whoAmI].SendSuccessMessage($"Has usado {take.Name} y has obtenido {give.Name}!");
+							TShock.Players[e.Msg.whoAmI].GiveItem(take.netID, stack - 1);
+							TShock.Players[e.Msg.whoAmI].SendSuccessMessage("Has recuperado las llaves de botin de exceso.");
 						}
 						Exchanging[e.Msg.whoAmI] = null;
 						e.Handled = true;
@@ -126,16 +126,16 @@ namespace KeyChanger
 			Config = Config.Read();
 
 			//This is the main command, which branches to everything the plugin can do, by checking the first parameter a player inputs
-			Commands.ChatCommands.Add(new Command(new List<string>() { "key.change", "key.reload", "key.mode" }, KeyChange, "key")
+			Commands.ChatCommands.Add(new Command(new List<string>() { "botin.abrir", "botin.reload", "botin.modo" }, KeyChange, "botin")
 			{
 				HelpDesc = new[]
 				{
-					$"{Commands.Specifier}key - Shows plugin info.",
-					$"{Commands.Specifier}key change <type> - Exchanges a key of the input type.",
-					$"{Commands.Specifier}key list - Shows a list of available keys and items.",
-					$"{Commands.Specifier}key mode <mode> - Changes exchange mode.",
-					$"{Commands.Specifier}key reload - Reloads the config file.",
-					"If an exchange fails, make sure your inventory has free slots."
+					$"{Commands.Specifier}botin - Muestra informacion del plugin.",
+					$"{Commands.Specifier}botin abrir <tipo> - Utiliza la llave correspondiente para abrir el botin especificado en <tipo>.",
+					$"{Commands.Specifier}botin lista - Muestra el listado de botines disponibles que puedes conseguir.",
+					$"{Commands.Specifier}botin modo <modo> - Cambia el modo de intercambio.",
+					$"{Commands.Specifier}botin recargar - Vuelve a cargar la configuracion.",
+					"Si no logras realizar el intercambio, asegurate de tener suficiente espacio en tu inventario."
 				}
 			});
 
@@ -157,51 +157,51 @@ namespace KeyChanger
 			// SSC check to alert users
 			if (!Main.ServerSideCharacter)
 			{
-				ply.SendWarningMessage("[Warning] This plugin will not work properly with ServerSideCharacters disabled.");
+				ply.SendWarningMessage("[Advertencia] Este complemento puede no funcionar en servidores que no tengan SSC activado.");
 			}
 
 			if (args.Parameters.Count < 1)
 			{
 				// Plugin Info
 				var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
-				ply.SendMessage($"KeyChanger (v{version}) by Enerdy", Color.SkyBlue);
-				ply.SendMessage("Description: Changes special chest keys into their specific items", Color.SkyBlue);
-				ply.SendMessage($"Syntax: {Commands.Specifier}key <list/mode/change/reload> [type]", Color.SkyBlue);
-				ply.SendMessage($"Type {Commands.Specifier}help key for more info", Color.SkyBlue);
+				ply.SendMessage($"KeyChanger (v{version}) por Enerdy - Actualizado y traducido por Tsviets", Color.SkyBlue);
+				ply.SendMessage("Descripcion: Abre cajas de botin con llaves para obtener objetos.", Color.SkyBlue);
+				ply.SendMessage($"Modo de uso: {Commands.Specifier}botin <lista/modo/abrir/reload> [tipo]", Color.SkyBlue);
+				ply.SendMessage($"Escribe {Commands.Specifier}help botin para más informacion.", Color.SkyBlue);
 			}
-			else if (args.Parameters[0].ToLower() == "change" && args.Parameters.Count == 1)
+			else if (args.Parameters[0].ToLower() == "abrir" && args.Parameters.Count == 1)
 			{
-				ply.SendErrorMessage("Invalid syntax! Proper syntax: {0}key change <type>", Commands.Specifier);
+				ply.SendErrorMessage("Error de uso. Uso correcto: {0}botin abrir <tipo>", Commands.Specifier);
 			}
 			else if (args.Parameters.Count > 0)
 			{
 				string cmd = args.Parameters[0].ToLower();
 				switch (cmd)
 				{
-					case "change":
+					case "abrir":
 						// Prevents cast from the server console
 						if (!ply.RealPlayer)
 						{
-							ply.SendErrorMessage("You must use this command in-game.");
+							ply.SendErrorMessage("Debes usar este comando dentro del juego.");
 							return;
 						}
 
-						if (!ply.HasPermission("key.change"))
+						if (!ply.HasPermission("botin.abrir"))
 						{
-							ply.SendErrorMessage("You do not have access to this command.");
+							ply.SendErrorMessage("No tienes acceso a este comando.");
 							break;
 						}
 
 						KeyTypes type;
 						if (!Enum.TryParse(args.Parameters[1].ToLowerInvariant(), true, out type))
 						{
-							ply.SendErrorMessage("Invalid key type! Available types: " + String.Join(", ",
-								Config.EnableTempleKey ? "temple" : null,
-								Config.EnableJungleKey ? "jungle" : null,
-								Config.EnableCorruptionKey ? "corruption" : null,
-								Config.EnableCrimsonKey ? "crimson" : null,
-								Config.EnableHallowedKey ? "hallowed" : null,
-								Config.EnableFrozenKey ? "frozen" : null));
+							ply.SendErrorMessage("El botin seleccionado es invalido. Tipos de botines disponibles: " + String.Join(", ",
+								Config.EnableTempleKey ? "templo" : null,
+								Config.EnableJungleKey ? "jungla" : null,
+								Config.EnableCorruptionKey ? "corrupto" : null,
+								Config.EnableCrimsonKey ? "carmesi" : null,
+								Config.EnableHallowedKey ? "sagrado" : null,
+								Config.EnableFrozenKey ? "helado" : null));
 							return;
 						}
 
@@ -209,7 +209,7 @@ namespace KeyChanger
 						// Verifies whether the key has been enabled
 						if (!key.Enabled)
 						{
-							ply.SendInfoMessage("The selected key is disabled.");
+							ply.SendInfoMessage("El botin seleccionado se encuentra deshabilitado.");
 							return;
 						}
 
@@ -225,7 +225,7 @@ namespace KeyChanger
 						var lookup = ply.TPlayer.inventory.FirstOrDefault(i => i.netID == (int)key.Type);
 						if (lookup == null)
 						{
-							ply.SendErrorMessage("Make sure you carry the selected key in your inventory.");
+							ply.SendErrorMessage("Asegurate de tener en tu inventario la llave del botin que quieres abrir.");
 							return;
 						}
 
@@ -240,14 +240,14 @@ namespace KeyChanger
 							// Checks if the required region is set to null
 							if (region == null)
 							{
-								ply.SendInfoMessage("No valid region was set for this key.");
+								ply.SendInfoMessage("No se ha especificado una region de intercambio para este botin.");
 								return;
 							}
 
 							// Checks if the player is inside the region
 							if (!region.InArea(args.Player.TileX, args.Player.TileY))
 							{
-								ply.SendErrorMessage("You are not in a valid region to make this exchange.");
+								ply.SendErrorMessage("Debes ir a la region indicada para abrir tu botin -> " + region.Name );
 								return;
 							}
 						}
@@ -259,60 +259,89 @@ namespace KeyChanger
 							// Loops through the player's inventory
 							if (item.netID == (int)key.Type)
 							{
-								// Found the item, checking for available slots
-								if (item.stack == 1 || ply.InventorySlotAvailable)
+								// Found the item, checking for available slots. This will increase invManage for each empty slot until ic = 50, as any further slot have other purposes (coins, ammo, etc.)
+								var invManage = 0;
+								for (int ic = 0; ic < 50; ic++)
 								{
-									ply.TPlayer.inventory[i].stack--;
-									NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, NetworkText.Empty, ply.Index, i);
-									Random rand = new Random();
-									Item give = key.Items[rand.Next(0, key.Items.Count)];
-									ply.GiveItem(give.netID, give.Name, give.width, give.height, 1);
-									Item take = TShock.Utils.GetItemById((int)key.Type);
-									ply.SendSuccessMessage("Exchanged a {0} for 1 {1}!", take.Name, give.Name);
+									if (ply.TPlayer.inventory[ic].Name == "")
+										invManage++;
+
+								}
+								var cfgCount = Config.ItemCountGiven;
+								var LBenabler = Config.EnableLootboxMode;
+								if ((item.stack == 1 & (item.stack + invManage) >= cfgCount & LBenabler == true) || ((invManage >= cfgCount) & LBenabler == true)) // If your key stack is 1, this will consider it as an empty slot as well.
+								{																																
+										ply.TPlayer.inventory[i].stack--;
+										ply.SendSuccessMessage("Has usado una llave de botin => {0}", key.Type); // This here will show the opened lootbox, rename args as you see fit.
+										Random rand = new Random();
+									for (int icount = 0; icount < cfgCount; icount++)
+										{
+											NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, NetworkText.Empty, ply.Index, i);
+											Item give = key.Items[rand.Next(0, key.Items.Count)];
+											ply.GiveItem(give.netID, 1);
+											Item take = TShock.Utils.GetItemById((int)key.Type);
+											ply.SendSuccessMessage("Has recibido {0}!", give.Name);
+										}
+
+								}
+								else if ((item.stack == 1 & (item.stack + invManage) > key.Items.Count & LBenabler == false) || (( invManage > key.Items.Count) & LBenabler == false))
+								{
+								ply.TPlayer.inventory[i].stack--;
+								ply.SendSuccessMessage("Has abierto usado una llave de botin => {0}", key.Type);
+								for (int norand = 0; norand < key.Items.Count; norand++)
+									{
+										NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, NetworkText.Empty, ply.Index, i);
+										Item give = key.Items[norand];
+										ply.GiveItem(give.netID, 1);
+										Item take = TShock.Utils.GetItemById((int)key.Type);
+										ply.SendSuccessMessage("Has recibido {0}!", give.Name);
+									}
+								}
+								else
+								{
+									// Sent if neither of the above conditions were fulfilled.
+									ply.SendErrorMessage("Asegurate de tener espacio en tu inventario.");
 									return;
 								}
-								// Sent if neither of the above conditions were fulfilled.
-								ply.SendErrorMessage("Make sure you have at least one available inventory slot.");
-								return;
 							}
 						}
 						break;
 
 					case "reload":
 						{
-							if (!ply.HasPermission("key.reload"))
+							if (!ply.HasPermission("botin.reload"))
 							{
-								ply.SendErrorMessage("You do not have access to this command.");
+								ply.SendErrorMessage("No tienes permiso para usar este comando.");
 								break;
 							}
 
 							Config = Config.Read();
-							ply.SendSuccessMessage("KeyChangerConfig.json reloaded successfully.");
+							ply.SendSuccessMessage("Se han actualizado los cambios en la configuracion.");
 							break;
 						}
 
-					case "list":
+					case "lista":
 						{
-							ply.SendMessage("Temple Key - " + String.Join(", ", Utils.LoadKey(KeyTypes.Temple).Items.Select(i => i.Name)), Color.Goldenrod);
-							ply.SendMessage("Jungle Key - " + String.Join(", ", Utils.LoadKey(KeyTypes.Jungle).Items.Select(i => i.Name)), Color.Goldenrod);
-							ply.SendMessage("Corruption Key - " + String.Join(", ", Utils.LoadKey(KeyTypes.Corruption).Items.Select(i => i.Name)), Color.Goldenrod);
-							ply.SendMessage("Crimson Key - " + String.Join(", ", Utils.LoadKey(KeyTypes.Crimson).Items.Select(i => i.Name)), Color.Goldenrod);
-							ply.SendMessage("Hallowed Key - " + String.Join(", ", Utils.LoadKey(KeyTypes.Hallowed).Items.Select(i => i.Name)), Color.Goldenrod);
-							ply.SendMessage("Frozen Key - " + String.Join(", ", Utils.LoadKey(KeyTypes.Frozen).Items.Select(i => i.Name)), Color.Goldenrod);
+							ply.SendMessage("Botin del Templo - " + String.Join(", ", Utils.LoadKey(KeyTypes.Templo).Items.Select(i => i.Name)), Color.Goldenrod);
+							ply.SendMessage("Botin de la Jungla - " + String.Join(", ", Utils.LoadKey(KeyTypes.Jungla).Items.Select(i => i.Name)), Color.Goldenrod);
+							ply.SendMessage("Botin Corrupto - " + String.Join(", ", Utils.LoadKey(KeyTypes.Corrupto).Items.Select(i => i.Name)), Color.Goldenrod);
+							ply.SendMessage("Botin Carmesi - " + String.Join(", ", Utils.LoadKey(KeyTypes.Carmesi).Items.Select(i => i.Name)), Color.Goldenrod);
+							ply.SendMessage("Botin Sagrado - " + String.Join(", ", Utils.LoadKey(KeyTypes.Sagrado).Items.Select(i => i.Name)), Color.Goldenrod);
+							ply.SendMessage("Botin Helado - " + String.Join(", ", Utils.LoadKey(KeyTypes.Helado).Items.Select(i => i.Name)), Color.Goldenrod);
 							break;
 						}
 
-					case "mode":
+					case "modo":
 						{
-							if (!ply.HasPermission("key.mode"))
+							if (!ply.HasPermission("botin.modo"))
 							{
-								ply.SendErrorMessage("You do not have access to this command.");
+								ply.SendErrorMessage("No tienes acceso a este comando.");
 								break;
 							}
 
 							if (args.Parameters.Count < 2)
 							{
-								ply.SendErrorMessage("Invalid syntax! Proper syntax: {0}key mode <normal/region/market>", Commands.Specifier);
+								ply.SendErrorMessage("Error de uso. Modo de uso: {0}botin modo <normal/region/mercado>", Commands.Specifier);
 								break;
 							}
 
@@ -321,23 +350,23 @@ namespace KeyChanger
 							if (query == "normal")
 							{
 								Config.EnableRegionExchanges = false;
-								ply.SendSuccessMessage("Exchange mode set to normal (exchange everywhere).");
+								ply.SendSuccessMessage("Modo de intercambio asignado: normal (cualquier lugar).");
 							}
 							else if (query == "region")
 							{
 								Config.EnableRegionExchanges = true;
 								Config.MarketMode = false;
-								ply.SendSuccessMessage("Exchange mode set to region (a region for each type).");
+								ply.SendSuccessMessage("Modo de intercambio asignado: region (una region por cada llave).");
 							}
-							else if (query == "market")
+							else if (query == "mercado")
 							{
 								Config.EnableRegionExchanges = true;
 								Config.MarketMode = true;
-								ply.SendSuccessMessage("Exchange mode set to market (one region for every type).");
+								ply.SendSuccessMessage("Modo de intercambio asignado: mercado (una region para todas las llaves).");
 							}
 							else
 							{
-								ply.SendErrorMessage("Invalid syntax! Proper syntax: {0}key mode <normal/region/market>", Commands.Specifier);
+								ply.SendErrorMessage("Sintaxis invalida. Modo de uso: {0}llaves modo <normal/region/mercado>", Commands.Specifier);
 								return;
 							}
 							Config.Write();

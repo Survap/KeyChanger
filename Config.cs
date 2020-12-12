@@ -17,13 +17,15 @@ namespace KeyChanger
 		public bool EnableCrimsonKey = true;
 		public bool EnableHallowedKey = true;
 		public bool EnableFrozenKey = true;
+		public bool EnableLootboxMode = true;							// |If set true, you'll get a random amount of items defined by 'ItemCountGiven' below. If set to false, player will get every possible content from the used key, regardless of 'ItemCountGiven'.
 
 		public int[] TempleKeyItem = new int[] { 1293 };				// |Lihzahrd Power Cell
 		public int[] JungleKeyItem = new int[] { 1156 };				// |Piranha Gun
 		public int[] CorruptionKeyItem = new int[] { 1571 };			// |Scourge of the Corruptor
 		public int[] CrimsonKeyItem = new int[] { 1569 };				// |Vampire Knifes
 		public int[] HallowedKeyItem = new int[] { 1260 };				// |Rainbow Gun
-		public int[] FrozenKeyItem = new int[] { 1572 };				// |Frost Hydra Staff
+		public int[] FrozenKeyItem = new int[] { 1572 };                // |Frost Hydra Staff
+		public int ItemCountGiven = 1 ;									// |Stablish the amount of random items given when EnableLootBoxMode = true. Value can't be less than 1 or higher than the amount of items specified within a key.
 
 		// Those are optional; They're only needed if EnableRegionExchanges is set to true. Default is set to null,
 		// so that players can be informed of non-existing regions.
@@ -59,7 +61,7 @@ namespace KeyChanger
 				}
 				else
 				{
-					TShock.Log.ConsoleInfo("Creating config file for KeyChangerSSC...");
+					TShock.Log.ConsoleInfo("Creando archivo de configuracion para KeyChangerSSC...");
 				}
 
 				// Create or update the file to fix missing options
