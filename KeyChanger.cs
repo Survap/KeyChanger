@@ -166,7 +166,7 @@ namespace KeyChanger
 				var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
 				ply.SendMessage($"KeyChanger (v{version}) por Enerdy - Actualizado y traducido por Tsviets", Color.SkyBlue);
 				ply.SendMessage("Descripcion: Abre cajas de botin con llaves para obtener objetos.", Color.SkyBlue);
-				ply.SendMessage($"Modo de uso: {Commands.Specifier}botin <lista/modo/abrir/reload> [tipo]", Color.SkyBlue);
+				ply.SendMessage($"Modo de uso: {Commands.Specifier}botin <lista/modo/abrir> [tipo]", Color.SkyBlue);
 				ply.SendMessage($"Escribe {Commands.Specifier}help botin para más informacion.", Color.SkyBlue);
 			}
 			else if (args.Parameters[0].ToLower() == "abrir" && args.Parameters.Count == 1)
@@ -322,12 +322,12 @@ namespace KeyChanger
 
 					case "lista":
 						{
-							ply.SendMessage("Botin del Templo - " + String.Join(", ", Utils.LoadKey(KeyTypes.Templo).Items.Select(i => i.Name)), Color.Goldenrod);
-							ply.SendMessage("Botin de la Jungla - " + String.Join(", ", Utils.LoadKey(KeyTypes.Jungla).Items.Select(i => i.Name)), Color.Goldenrod);
-							ply.SendMessage("Botin Corrupto - " + String.Join(", ", Utils.LoadKey(KeyTypes.Corrupto).Items.Select(i => i.Name)), Color.Goldenrod);
-							ply.SendMessage("Botin Carmesi - " + String.Join(", ", Utils.LoadKey(KeyTypes.Carmesi).Items.Select(i => i.Name)), Color.Goldenrod);
-							ply.SendMessage("Botin Sagrado - " + String.Join(", ", Utils.LoadKey(KeyTypes.Sagrado).Items.Select(i => i.Name)), Color.Goldenrod);
-							ply.SendMessage("Botin Helado - " + String.Join(", ", Utils.LoadKey(KeyTypes.Helado).Items.Select(i => i.Name)), Color.Goldenrod);
+							ply.SendMessage("Botin del Templo - [i:" + String.Join("] [i:", Utils.LoadKey(KeyTypes.Templo).Items.Select(i => i.netID)) + "]", Color.Chocolate);
+							ply.SendMessage("Botin de la Jungla - [i:" + String.Join("] [i:", Utils.LoadKey(KeyTypes.Jungla).Items.Select(i => i.netID)) + "]", Color.DarkGreen);
+							ply.SendMessage("Botin Corrupto - [i:" + String.Join("] [i:", Utils.LoadKey(KeyTypes.Corrupto).Items.Select(i => i.netID)) + "]", Color.Purple);
+							ply.SendMessage("Botin Carmesi - [i:" + String.Join("] [i:", Utils.LoadKey(KeyTypes.Carmesi).Items.Select(i => i.netID)) + "]", Color.OrangeRed);
+							ply.SendMessage("Botin Sagrado - [i:" + String.Join("] [i:", Utils.LoadKey(KeyTypes.Sagrado).Items.Select(i => i.netID)) + "]", Color.LightPink);
+							ply.SendMessage("Botin Helado - [i:" + String.Join("] [i:", Utils.LoadKey(KeyTypes.Helado).Items.Select(i => i.netID)) + "]", Color.SkyBlue);
 							break;
 						}
 
