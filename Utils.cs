@@ -47,6 +47,31 @@ namespace KeyChanger
 					key.Items = GetItems(KeyChanger.Config.FrozenKeyItem);
 					key.Region = TShock.Regions.GetRegionByName(KeyChanger.Config.FrozenRegion);
 					break;
+				case KeyTypes.Dorado:
+					key = new Key("dorado", KeyTypes.Dorado, KeyChanger.Config.EnableFrozenKey);
+					key.Items = GetItems(KeyChanger.Config.GoldenKeyItem);
+					key.Region = TShock.Regions.GetRegionByName(KeyChanger.Config.GoldenRegion);
+					break;
+				case KeyTypes.Sombrio:
+					key = new Key("sombrio", KeyTypes.Sombrio, KeyChanger.Config.EnableFrozenKey);
+					key.Items = GetItems(KeyChanger.Config.ShadowKeyItem);
+					key.Region = TShock.Regions.GetRegionByName(KeyChanger.Config.ShadowRegion);
+					break;
+				case KeyTypes.Radiante:
+					key = new Key("radiante", KeyTypes.Radiante, KeyChanger.Config.EnableFrozenKey);
+					key.Items = GetItems(KeyChanger.Config.LightKeyItem);
+					key.Region = TShock.Regions.GetRegionByName(KeyChanger.Config.LightRegion);
+					break;
+				case KeyTypes.Nocturno:
+					key = new Key("nocturno", KeyTypes.Nocturno, KeyChanger.Config.EnableFrozenKey);
+					key.Items = GetItems(KeyChanger.Config.NightKeyItem);
+					key.Region = TShock.Regions.GetRegionByName(KeyChanger.Config.NightRegion);
+					break;
+				case KeyTypes.Desierto:
+					key = new Key("nocturno", KeyTypes.Desierto, KeyChanger.Config.EnableFrozenKey);
+					key.Items = GetItems(KeyChanger.Config.DesertKeyItem);
+					key.Region = TShock.Regions.GetRegionByName(KeyChanger.Config.DesertRegion);
+					break;
 				default:
 					return null;
 			}

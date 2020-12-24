@@ -17,6 +17,11 @@ namespace KeyChanger
 		public bool EnableCrimsonKey = true;
 		public bool EnableHallowedKey = true;
 		public bool EnableFrozenKey = true;
+		public bool EnableGoldenKey = true;
+		public bool EnableShadowKey = true;
+		public bool EnableLightKey = true;
+		public bool EnableNightKey = true;
+		public bool EnableDesertKey = true;
 		public bool EnableLootboxMode = true;							// |If set true, you'll get a random amount of items defined by 'ItemCountGiven' below. If set to false, player will get every possible content from the used key, regardless of 'ItemCountGiven'.
 
 		public int[] TempleKeyItem = new int[] { 1293 };				// |Lihzahrd Power Cell
@@ -25,6 +30,11 @@ namespace KeyChanger
 		public int[] CrimsonKeyItem = new int[] { 1569 };				// |Vampire Knifes
 		public int[] HallowedKeyItem = new int[] { 1260 };				// |Rainbow Gun
 		public int[] FrozenKeyItem = new int[] { 1572 };                // |Frost Hydra Staff
+		public int[] GoldenKeyItem = new int[] { };						// |Golden Key
+		public int[] ShadowKeyItem = new int[] { };						// |Shadow Key
+		public int[] LightKeyItem = new int[] { };					    // |Key of Light
+		public int[] NightKeyItem = new int[] { };                      // |Key of Night
+		public int[] DesertKeyItem = new int[] { };                     // |Key of Night
 		public int ItemCountGiven = 1 ;									// |Stablish the amount of random items given when EnableLootBoxMode = true. Value can't be less than 1 or higher than the amount of items specified within a key.
 
 		// Those are optional; They're only needed if EnableRegionExchanges is set to true. Default is set to null,
@@ -36,6 +46,11 @@ namespace KeyChanger
 		public string CrimsonRegion = null;
 		public string HallowedRegion = null;
 		public string FrozenRegion = null;
+		public string GoldenRegion = null;
+		public string ShadowRegion = null;
+		public string LightRegion = null;
+		public string NightRegion = null;
+		public string DesertRegion = null;
 
 		public static Config Read(string savepath = "")
 		{

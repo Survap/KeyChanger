@@ -132,7 +132,7 @@ namespace KeyChanger
 				{
 					$"{Commands.Specifier}botin - Muestra informacion del plugin.",
 					$"{Commands.Specifier}botin abrir <tipo> - Utiliza la llave correspondiente para abrir el botin especificado en <tipo>.",
-					$"{Commands.Specifier}botin lista - Muestra el listado de botines disponibles que puedes conseguir.",
+					$"{Commands.Specifier}botin lista <pagina> - Muestra el listado de botines disponibles que puedes conseguir por pagina.",
 					$"{Commands.Specifier}botin modo <modo> - Cambia el modo de intercambio.",
 					$"{Commands.Specifier}botin recargar - Vuelve a cargar la configuracion.",
 					"Si no logras realizar el intercambio, asegurate de tener suficiente espacio en tu inventario."
@@ -201,7 +201,12 @@ namespace KeyChanger
 								Config.EnableCorruptionKey ? "corrupto" : null,
 								Config.EnableCrimsonKey ? "carmesi" : null,
 								Config.EnableHallowedKey ? "sagrado" : null,
-								Config.EnableFrozenKey ? "helado" : null));
+								Config.EnableFrozenKey ? "helado" : null,
+								Config.EnableGoldenKey ? "dorado" : null,
+								Config.EnableShadowKey ? "sombrio" : null,
+								Config.EnableLightKey ? "radiante" : null,
+								Config.EnableNightKey ? "nocturno" : null,
+								Config.EnableDesertKey ? "desierto" : null));
 							return;
 						}
 
@@ -272,7 +277,7 @@ namespace KeyChanger
 								if ((item.stack == 1 & (item.stack + invManage) >= cfgCount & LBenabler == true) || ((invManage >= cfgCount) & LBenabler == true)) // If your key stack is 1, this will consider it as an empty slot as well.
 								{																																
 										ply.TPlayer.inventory[i].stack--;
-										ply.SendSuccessMessage("Has usado una llave de botin => {0}", key.Type); // This here will show the opened lootbox, rename args as you see fit.
+										ply.SendSuccessMessage("Has usado una llave de botin => [i:{0}]", key.Items); // This here will show the opened lootbox, rename args as you see fit.
 										Random rand = new Random();
 									for (int icount = 0; icount < cfgCount; icount++)
 										{
@@ -280,21 +285,21 @@ namespace KeyChanger
 											Item give = key.Items[rand.Next(0, key.Items.Count)];
 											ply.GiveItem(give.netID, 1);
 											Item take = TShock.Utils.GetItemById((int)key.Type);
-											ply.SendSuccessMessage("Has recibido {0}!", give.Name);
+											ply.SendSuccessMessage("Has recibido [i:{0}]!", give.netID);
 										}
 
 								}
 								else if ((item.stack == 1 & (item.stack + invManage) > key.Items.Count & LBenabler == false) || (( invManage > key.Items.Count) & LBenabler == false))
 								{
 								ply.TPlayer.inventory[i].stack--;
-								ply.SendSuccessMessage("Has abierto usado una llave de botin => {0}", key.Type);
+								ply.SendSuccessMessage("Has abierto usado una llave de botin => [i:{0}]", key.Type);
 								for (int norand = 0; norand < key.Items.Count; norand++)
 									{
 										NetMessage.SendData((int)PacketTypes.PlayerSlot, -1, -1, NetworkText.Empty, ply.Index, i);
 										Item give = key.Items[norand];
 										ply.GiveItem(give.netID, 1);
 										Item take = TShock.Utils.GetItemById((int)key.Type);
-										ply.SendSuccessMessage("Has recibido {0}!", give.Name);
+										ply.SendSuccessMessage("Has recibido [i:{0}]!", give.netID);
 									}
 								}
 								else
@@ -328,6 +333,28 @@ namespace KeyChanger
 							ply.SendMessage("Botin Carmesi - [i:" + String.Join("] [i:", Utils.LoadKey(KeyTypes.Carmesi).Items.Select(i => i.netID)) + "]", Color.OrangeRed);
 							ply.SendMessage("Botin Sagrado - [i:" + String.Join("] [i:", Utils.LoadKey(KeyTypes.Sagrado).Items.Select(i => i.netID)) + "]", Color.LightPink);
 							ply.SendMessage("Botin Helado - [i:" + String.Join("] [i:", Utils.LoadKey(KeyTypes.Helado).Items.Select(i => i.netID)) + "]", Color.SkyBlue);
+							break;
+						}
+
+					case "lista 1":
+						{
+							ply.SendMessage("Botin del Templo [i:1141] - [i:" + String.Join("] [i:", Utils.LoadKey(KeyTypes.Templo).Items.Select(i => i.netID)) + "]", Color.Chocolate);
+							ply.SendMessage("Botin de la Jungla [i:1533] - [i:" + String.Join("] [i:", Utils.LoadKey(KeyTypes.Jungla).Items.Select(i => i.netID)) + "]", Color.DarkGreen);
+							ply.SendMessage("Botin Corrupto [i:1534] - [i:" + String.Join("] [i:", Utils.LoadKey(KeyTypes.Corrupto).Items.Select(i => i.netID)) + "]", Color.Purple);
+							ply.SendMessage("Botin Carmesi [i:1535] - [i:" + String.Join("] [i:", Utils.LoadKey(KeyTypes.Carmesi).Items.Select(i => i.netID)) + "]", Color.OrangeRed);
+							ply.SendMessage("Botin Sagrado [i:1536] - [i:" + String.Join("] [i:", Utils.LoadKey(KeyTypes.Sagrado).Items.Select(i => i.netID)) + "]", Color.LightPink);
+							ply.SendMessage("Escribe /botin lista 2 para ver más resultados", Color.Yellow);
+							break;
+						}
+
+					case "lista 2":
+						{
+							ply.SendMessage("Botin Helado [i:1537] - [i:" + String.Join("] [i:", Utils.LoadKey(KeyTypes.Helado).Items.Select(i => i.netID)) + "]", Color.SkyBlue);
+							ply.SendMessage("Botin Dorado [i:327] - [i:" + String.Join("] [i:", Utils.LoadKey(KeyTypes.Dorado).Items.Select(i => i.netID)) + "]", Color.Goldenrod);
+							ply.SendMessage("Botin Sombrio [i:329] - [i:" + String.Join("] [i:", Utils.LoadKey(KeyTypes.Sombrio).Items.Select(i => i.netID)) + "]", Color.DarkViolet);
+							ply.SendMessage("Botin Radiante [i:3092] - [i:" + String.Join("] [i:", Utils.LoadKey(KeyTypes.Radiante).Items.Select(i => i.netID)) + "]", Color.LightYellow);
+							ply.SendMessage("Botin Nocturno [i:3091] - [i:" + String.Join("] [i:", Utils.LoadKey(KeyTypes.Nocturno).Items.Select(i => i.netID)) + "]", Color.DarkBlue);
+							ply.SendMessage("Botin del Desierto [i:4714] - [i:" + String.Join("] [i:", Utils.LoadKey(KeyTypes.Desierto).Items.Select(i => i.netID)) + "]", Color.LightGoldenrodYellow);
 							break;
 						}
 

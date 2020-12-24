@@ -50,27 +50,21 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Mono.Data.Sqlite">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Terraria\TerraChinz\Referencias\Mono.Data.Sqlite.dll</HintPath>
-    </Reference>
-    <Reference Include="MySql.Data">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Terraria\TerraChinz\Referencias\MySql.Data.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Terraria\TerraChinz\Referencias\Newtonsoft.Json.dll</HintPath>
+      <HintPath>DLL\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="OTAPI">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Terraria\TerraChinz\Referencias\OTAPI.dll</HintPath>
+      <HintPath>DLL\OTAPI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="TerrariaServer">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Terraria\TerraChinz\Referencias\TerrariaServer.exe</HintPath>
+      <HintPath>DLL\TerrariaServer.exe</HintPath>
     </Reference>
     <Reference Include="TShockAPI">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Terraria\TerraChinz\Referencias\TShockAPI.dll</HintPath>
+      <HintPath>DLL\TShockAPI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
